@@ -6,6 +6,9 @@ class Task < ApplicationRecord
     validates :name,  presence: true
     validates :description, presence: true
     
+
+    validates :dueDate, :allow_blank => true, :timeliness => {:on_or_after => lambda { Date.current }, :type => :datetime}
+    
     belongs_to :project
     has_one :user
 end
