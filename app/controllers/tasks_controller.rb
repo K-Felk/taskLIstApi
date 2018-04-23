@@ -38,7 +38,7 @@ class TasksController < ApplicationController
 
     def sanitize_task_params
       params[:urgency] = params[:urgency].to_i
-      
+      params[:user_id] = params[:user_id].to_i
     end
 
     def set_project
@@ -52,6 +52,6 @@ class TasksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
-      params.permit(:name, :description, :dueDate, :notes, :urgency, :completed)
+      params.permit(:name, :description, :dueDate, :notes, :urgency, :completed, :user_id)
     end
 end
