@@ -1,13 +1,21 @@
 class TasksController < ApplicationController
 
   before_action :set_project
+  before_action :set_user
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   before_action :sanitize_task_params
 
   
   # GET project/:project_id/tasks/
   def index
-    json_response(@project.tasks)
+    if @project.blank?
+      @tasks = Task.find_by(user_id: @user.id)
+      json_response(@tasks)
+    else
+      json_response(@project.tasks)
+      
+    end
+   
   end
 
   # GET project/:project_id/tasks/:id
@@ -38,13 +46,24 @@ class TasksController < ApplicationController
 
     def sanitize_task_params
       params[:urgency] = params[:urgency].to_i
-      params[:user_id] = params[:user_id].to_i
+      
     end
 
     def set_project
-      @project = Project.find(params[:project_id])
+      if params[:project_id].blank?
+        @project = ""
+      else
+        @project = Project.find(params[:project_id])
+      end
     end
 
+    def set_user
+      if params[:user_id].blank?
+        @user = ""
+      else
+        @user = User.find(params[:user_id])
+      end
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_task
       @task = Task.find(params[:id])
