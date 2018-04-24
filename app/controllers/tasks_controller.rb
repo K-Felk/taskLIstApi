@@ -9,7 +9,7 @@ class TasksController < ApplicationController
   # GET project/:project_id/tasks/
   def index
     if @project.blank?
-      @tasks = Task.find_by(user_id: @user.id)
+      @tasks = @user.tasks
       json_response(@tasks)
     else
       json_response(@project.tasks)
@@ -24,7 +24,7 @@ class TasksController < ApplicationController
     json_response(@task)
   end
 
-  # POST /users/:project_id/tasks
+  # POST /projects/:project_id/tasks
   def create
     task = @project.tasks.create!(task_params)
     json_response(task, :created)
@@ -61,7 +61,7 @@ class TasksController < ApplicationController
       if params[:user_id].blank?
         @user = ""
       else
-        @user = User.find(params[:user_id])
+        @user = User.find(params[:user_id].to_i)
       end
     end
     # Use callbacks to share common setup or constraints between actions.
