@@ -14,7 +14,7 @@ ActiveRecord::Schema.define(version: 20180423163050) do
 
   create_table "projects", force: :cascade do |t|
     t.string "name"
-    t.datetime "dueDate"
+    t.date "dueDate"
     t.text "description"
     t.text "notes"
     t.datetime "created_at", null: false
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20180423163050) do
   create_table "tasks", force: :cascade do |t|
     t.string "name"
     t.text "description"
-    t.datetime "dueDate"
+    t.date "dueDate"
     t.text "notes"
     t.integer "urgency"
     t.binary "completed"
